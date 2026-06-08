@@ -29,6 +29,7 @@ test:
 about:
   home: https://www.xxhash.com
   license: BSD-2-Clause
+  license_family: BSD
   license_file: LICENSE
   summary: Extremely fast hash algorithm
   description: |
