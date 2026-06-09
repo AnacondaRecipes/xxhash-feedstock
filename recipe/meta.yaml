@@ -33,21 +33,21 @@ test:
     - xxh64sum --help   # [unix]
 
     # check for headers
-    - test -f $PREFIX/include/xxh3.h                 # [unix]
-    - test -f $PREFIX/include/xxhash.h               # [unix]
+    - test -f $PREFIX/include/xxh3.h                         # [unix]
+    - test -f $PREFIX/include/xxhash.h                       # [unix]
     - if not exist %PREFIX%\Library\include\xxhash.h exit 1  # [win]
     - if not exist %PREFIX%\Library\include\xxh3.h exit 1    # [win]
 
     # check for static lib
-    - test -f $PREFIX/lib/libxxhash.a              # [unix]
-    - if not exist %PREFIX%\lib\xxhash.lib exit 1  # [win]
+    - test -f $PREFIX/lib/libxxhash.a                      # [unix]
+    - if not exist %PREFIX%\Library\lib\xxhash.lib exit 1  # [win]
 
     # check for dynamic lib
-    - test -f $PREFIX/lib/libxxhash.so                # [linux]
-    - test -f $PREFIX/lib/libxxhash.so.0              # [linux]
-    - test -f $PREFIX/lib/libxxhash.so.{{ version }}  # [linux]
-    - test -f $PREFIX/lib/libxxhash.dylib             # [osx]
-    - if not exist $PREFIX\lib\xxhash.dll exit 1      # [win]
+    - test -f $PREFIX/lib/libxxhash.so                     # [linux]
+    - test -f $PREFIX/lib/libxxhash.so.0                   # [linux]
+    - test -f $PREFIX/lib/libxxhash.so.{{ version }}       # [linux]
+    - test -f $PREFIX/lib/libxxhash.dylib                  # [osx]
+    - if not exist %PREFIX%\Library\bin\xxhash.dll exit 1  # [win]
 
     # check for pkgconfig file
     - test -f $PREFIX/lib/pkgconfig/libxxhash.pc  # [unix]
