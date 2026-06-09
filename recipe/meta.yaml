@@ -1,5 +1,5 @@
 {% set name = "xxHash" %}
-{% set version = "0.8.0" %}
+{% set version = "0.8.3" %}
 
 package:
   name: {{ name|lower }}
@@ -7,10 +7,10 @@ package:
 
 source:
   url: https://github.com/Cyan4973/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: 7054c3ebd169c97b64a92d7b994ab63c70dd53a06974f1f630ab782c28db0f4f
+  sha256: aae608dfe8213dfd05d909a57718ef82f30722c392344583d3f39050c7f29a80
 
 build:
-  number: 3
+  number: 0
   run_exports:
     # The recent history has been quite unstable: https://abi-laboratory.pro/?view=timeline&l=xxhash
     - {{ pin_subpackage("xxhash", max_pin="x.x.x") }}
@@ -18,16 +18,44 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
+    - {{ stdlib('c') }}
     - make  # [unix]
     - cmake  # [win]
 
 test:
   commands:
+    # test executable binaries
     - xxhsum --help
+    # symlinks to xxhsum (not available on Windows)
+    - xxh128sum --help  # [unix]
+    - xxh32sum --help   # [unix]
+    - xxh3sum --help    # [unix]
+    - xxh64sum --help   # [unix]
+
+    # check for headers
+    - test -f $PREFIX/include/xxh3.h                         # [unix]
+    - test -f $PREFIX/include/xxhash.h                       # [unix]
+    - if not exist %PREFIX%\Library\include\xxhash.h exit 1  # [win]
+    - if not exist %PREFIX%\Library\include\xxh3.h exit 1    # [win]
+
+    # check for static lib
+    - test -f $PREFIX/lib/libxxhash.a                      # [unix]
+    - if not exist %PREFIX%\Library\lib\xxhash.lib exit 1  # [win]
+
+    # check for dynamic lib
+    - test -f $PREFIX/lib/libxxhash.so                     # [linux]
+    - test -f $PREFIX/lib/libxxhash.so.0                   # [linux]
+    - test -f $PREFIX/lib/libxxhash.so.{{ version }}       # [linux]
+    - test -f $PREFIX/lib/libxxhash.dylib                  # [osx]
+    - if not exist %PREFIX%\Library\bin\xxhash.dll exit 1  # [win]
+
+    # check for pkgconfig file
+    - test -f $PREFIX/lib/pkgconfig/libxxhash.pc  # [unix]
 
 about:
-  home: http://www.xxhash.com/
+  home: https://www.xxhash.com
   license: BSD-2-Clause
+  license_family: BSD
   license_file: LICENSE
   summary: Extremely fast hash algorithm
   description: |
