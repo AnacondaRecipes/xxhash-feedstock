@@ -35,8 +35,8 @@ test:
     # check for headers
     - test -f $PREFIX/include/xxh3.h                 # [unix]
     - test -f $PREFIX/include/xxhash.h               # [unix]
-    - if not exist %PREFIX%\include\xxhash.h exit 1  # [win]
-    - if not exist %PREFIX%\include\xxh3.h exit 1    # [win]
+    - if not exist %PREFIX%\Library\include\xxhash.h exit 1  # [win]
+    - if not exist %PREFIX%\Library\include\xxh3.h exit 1    # [win]
 
     # check for static lib
     - test -f $PREFIX/lib/libxxhash.a              # [unix]
