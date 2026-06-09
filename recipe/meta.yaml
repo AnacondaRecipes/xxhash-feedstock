@@ -26,10 +26,11 @@ test:
   commands:
     # test executable binaries
     - xxhsum --help
-    - xxh128sum --help
-    - xxh32sum --help
-    - xxh3sum --help
-    - xxh64sum --help
+    # symlinks to xxhsum (not available on Windows)
+    - xxh128sum --help  # [unix]
+    - xxh32sum --help   # [unix]
+    - xxh3sum --help    # [unix]
+    - xxh64sum --help   # [unix]
 
     # check for headers
     - test -f $PREFIX/include/xxh3.h                 # [unix]
